@@ -170,7 +170,7 @@ namespace CodeChef
 
                         if (propValue == null)
                         {
-                            if (firstElement == prop)
+                            if (firstElement == prop && propertyNameslength != 1)
                             {
                                 result = "{" + "\"" + $"{prop}" + "\"" + ":" + "null,";
                                 continue;
@@ -180,7 +180,7 @@ namespace CodeChef
                                 result += "\"" + $"{prop}" + "\"" + ":" + "null" + "}";
                                 continue;
                             }
-                            else if (lastElement == prop && firstElement == prop)
+                            else if (lastElement == prop && firstElement == prop && propertyNameslength == 1)
                             {
                                 result = "{" + "\"" + $"{prop}" + "\"" + ":" + "null" + "}";
                                 continue;
@@ -389,7 +389,7 @@ namespace CodeChef
         {
             if (firstProperty == propName.ToString())
             {
-                result = "{" + "\"" + $"{propName}" + "\"" + ":" + "null,";
+                result += "{" + "\"" + $"{propName}" + "\"" + ":" + "null,";
             }
             else if (lastProperty == propName.ToString() && firstProperty != propName.ToString())
             {
@@ -397,7 +397,7 @@ namespace CodeChef
             }
             else if (lastProperty == propName.ToString() && firstProperty == propName.ToString())
             {
-                result = "{" + "\"" + $"{propName}" + "\"" + ":" + "null" + "}";
+                result += "{" + "\"" + $"{propName}" + "\"" + ":" + "null" + "}";
             }
             else
             {

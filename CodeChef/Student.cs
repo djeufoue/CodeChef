@@ -8,9 +8,6 @@ namespace CodeChef
 {
     public class Student
     { 
-        public int Id { get; set; }
-        public string Name { get; set; }        
-        public string Level { get; set; }
-        public Car Car { get; set; }
+        public Book Book { get; set; }
     }
 }
