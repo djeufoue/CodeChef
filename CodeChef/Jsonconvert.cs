@@ -264,17 +264,35 @@ namespace CodeChef
 
         static string firstProperty = null;
         static string lastProperty = null;
+
+        //For recurcive function
+        static string firstPropertyRecur = null;
+        static string lastPropertyRecur = null;
+
+        static string takeThisPropvalueRecur = null;
+
+        static string ChecThisValueRecur = null;
         public static string SerializationObjectNode(object? value, string ChecThisValue)
         {
             Type objectType = value.GetType();
 
-            if (ChecThisValue == FirstElementMainList)
-                result += "{" + "\"" + $"{objectType.Name}" + "\"" + ":";
-            else
-                result += "\"" + $"{objectType.Name}" + "\"" + ":";
+            if (firstPropertyRecur != null && lastPropertyRecur != null)
+            {
+                ChecThisValueRecur = ChecThisValue;
+                if (ChecThisValueRecur == firstPropertyRecur)
+                    result += "{" + "\"" + $"{objectType.Name}" + "\"" + ":";
+                else
+                    result += "\"" + $"{objectType.Name}" + "\"" + ":";
+            }
+            else if (FirstElementMainList != null || LastElementMainList != null)
+            {
+                if (ChecThisValue == FirstElementMainList)
+                    result += "{" + "\"" + $"{objectType.Name}" + "\"" + ":";
+                else
+                    result += "\"" + $"{objectType.Name}" + "\"" + ":";
 
+            }
             List<object> obj = new List<object>();
-
             obj.Add(value);
 
             foreach (object c in obj)
@@ -304,11 +322,19 @@ namespace CodeChef
                         if (propType.Name != "Int32" && propType.Name != "Boolean" && propType.Name != "Double" && propType.Name != "Single" &&
                                 propType.Name != "Int64" && propType.Name != "Decimal" && propType.Name != "String")
                         {
-                            string takeThisPropvalue = propValue.GetType().Name;
-                            firstProperty = firstElement;
-                            lastProperty = lastElement;
-                            result = SerializationObjectNode(propValue, canBeTheFirstValue);
-                            result += "}"; 
+                            takeThisPropvalueRecur = propValue.GetType().Name;
+                            firstPropertyRecur = firstElement;
+                            lastPropertyRecur = lastElement;
+                            result = SerializationObjectNode(propValue, takeThisPropvalueRecur);
+
+                            if(takeThisPropvalueRecur == firstElement && takeThisPropvalueRecur != lastElement)
+                            {
+                                result += ",";
+                            }
+                            else if (takeThisPropvalueRecur != firstElement && takeThisPropvalueRecur != lastElement)
+                                result += ",";
+                            else
+                                result += "}";
                             continue;
                         }
 
@@ -347,13 +373,14 @@ namespace CodeChef
                                 }
                             }
                         }
-                    }                                        
-                }           
-                
+                    }
+                }
+
             }
-            if (ChecThisValue == FirstElementMainList || ChecThisValue != LastElementMainList)
+            if(ChecThisValueRecur != ChecThisValue)
             {
-                result += ",";
+                if (ChecThisValue == FirstElementMainList || ChecThisValue != LastElementMainList)
+                    result += ",";               
             }
             return result;
         }
